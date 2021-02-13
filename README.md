@@ -102,7 +102,7 @@ https://reactnative.dev/docs/environment-setup
    ```
 3. Goto
    ```HTML
-   npm stsart
+   npm start
    ```
 
 ### Publish & Release on Expo
