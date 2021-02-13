@@ -4,10 +4,9 @@ export const get = async (url) => {
         var fullUrl = `${baseUrl}${url}`
         console.log(fullUrl)
         var req = await fetch(fullUrl)
-        console.log(req.status, req.statusText)
+        console.log("req.status",req.status)
         var json = await req.json()
-        console.log(json.code, json.statusText)
-        console.log(json.data)
+        console.log("json.code",json.code)
         return json.data
     } catch (error) {
         console.log(error)

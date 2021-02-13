@@ -1,53 +1,50 @@
 import React from 'react';
-import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, Linking, ActivityIndicator } from 'react-native';
+import { StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, Linking, ActivityIndicator, View } from 'react-native';
 import { Block, Text, theme, Button as GaButton } from 'galio-framework';
 
 import { Button, CharacterDetailComics } from '../components';
 import { Images, nowTheme } from '../constants';
 import { HeaderHeight } from '../constants/utils';
 import { withNavigation } from '@react-navigation/compat';
-import { characterdetailcomics } from '../services/characters';
+import { comicsdetailcharacter } from '../services/comics';
 
 const { width, height } = Dimensions.get('screen');
 
 const thumbMeasure = (width - 48 - 32) / 3;
 
-class CharacterDetail extends React.Component {
+class ComicDetail extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: null,
-      loading: true,
-      params: null
+      characters: null,
+      loadingcharacters: true,
+      params: props.route.params
     }
   }
+
   componentDidMount() {
     this.getDetail()
   }
 
   async getDetail() {
-    const { id } = this.props.route.params
+    const { id } = this.state.params
     if (this.scroll)
       this.scroll.scrollTo({ y: 0 })
+      
     this.setState({ loading: true })
-    var data = await characterdetailcomics(id)
-    this.setState({ data: data.results, loading: false, id })
+    var characters = await comicsdetailcharacter(id)
+    this.setState({ characters: characters.results, loadingcharacters: false })
   }
+
   render() {
-    const { loading } = this.state
-    const { route } = this.props
-    const { params } = route
-    if (this.state.params != params) {
-      this.setState({ params })
+    if (this.state.params != this.props.route.params) {
+      this.setState({ params: this.props.route.params })
       this.getDetail()
     }
+    const { params, loadingcharacters, characters } = this.state
     const {
       image,
       title,
-      comics,
-      series,
-      stories,
-      events
     } = params
 
     return (
@@ -90,64 +87,8 @@ class CharacterDetail extends React.Component {
                       opacity: .8
                     }}
                   >
-                    Karakter
+                    {params.pageCount} Sayfa
                   </Text>
-                </Block>
-                <Block style={styles.info}>
-                  <Block row space="around">
-
-                    <Block middle>
-                      <Text
-                        size={18}
-                        color="white"
-                        style={{ marginBottom: 4, fontFamily: 'montserrat-bold' }}
-                      >
-                        {comics.available}
-                      </Text>
-                      <Text style={{ fontFamily: 'montserrat-regular' }} size={14} color="white">
-                        Çizgi Roman
-                      </Text>
-                    </Block>
-
-                    <Block middle>
-                      <Text
-                        color="white"
-                        size={18}
-                        style={{ marginBottom: 4, fontFamily: 'montserrat-bold' }}
-                      >
-                        {series.available}
-                      </Text>
-                      <Text style={{ fontFamily: 'montserrat-regular' }} size={14} color="white">
-                        Dizi
-                        </Text>
-                    </Block>
-
-                    <Block middle>
-                      <Text
-                        color="white"
-                        size={18}
-                        style={{ marginBottom: 4, fontFamily: 'montserrat-bold' }}
-                      >
-                        {stories.available}
-                      </Text>
-                      <Text style={{ fontFamily: 'montserrat-regular' }} size={14} color="white">
-                        Hikaye
-                      </Text>
-                    </Block>
-
-                    <Block middle>
-                      <Text
-                        color="white"
-                        size={18}
-                        style={{ marginBottom: 4, fontFamily: 'montserrat-bold' }}
-                      >
-                        {events.available}
-                      </Text>
-                      <Text style={{ fontFamily: 'montserrat-regular' }} size={14} color="white">
-                        Olay
-                      </Text>
-                    </Block>
-                  </Block>
                 </Block>
               </Block>
 
@@ -177,26 +118,12 @@ class CharacterDetail extends React.Component {
                 color={'#888888'}
                 style={[styles.social, styles.shadow]}
               />
-              <GaButton
-                round
-                onlyIcon
-                shadowless
-                icon="file"
-                onPress={() => Linking.openURL(
-                  params.urls.find(f => f.type == 'comiclink').url
-                )}
-                iconFamily="Font-Awesome"
-                iconColor={nowTheme.COLORS.WHITE}
-                iconSize={nowTheme.SIZES.BASE * 1.375}
-                color={'#888888'}
-                style={[styles.social, styles.shadow]}
-              />
             </Block>
           </Block>
         </ImageBackground>
 
 
-        {loading ? <Block flex ><ActivityIndicator size="large" color={nowTheme.COLORS.ACTIVE} /></Block> : <Block flex style={{ marginTop: 20 }}>
+        {loadingcharacters ? <Block flex ><ActivityIndicator size="large" color={nowTheme.COLORS.ACTIVE} /></Block> : <Block flex style={{ marginTop: 20 }}>
           <Block middle>
             <Text
               style={{
@@ -228,7 +155,25 @@ class CharacterDetail extends React.Component {
           </Block>
           <Block row style={{ paddingVertical: 14, paddingHorizontal: 15 }} space="between">
             <Text bold size={16} color="#2c2c2c" style={{ marginTop: 3 }}>
-              Çizgi Romanlar
+              Yazarlar
+                  </Text>
+
+          </Block>
+          <Block style={{ paddingBottom: -HeaderHeight * 2, paddingHorizontal: 15 }}>
+            <Block>
+              {
+                params.creators.items.map((item, i) => (
+                  <View key={i} style={{ padding: 5, backgroundColor: 'white', borderRadius: 5 }}>
+                    <Text>{item.name + " / " + item.role}</Text>
+                  </View>
+                ))
+              }
+            </Block>
+          </Block>
+
+          <Block row style={{ paddingVertical: 14, paddingHorizontal: 15 }} space="between">
+            <Text bold size={16} color="#2c2c2c" style={{ marginTop: 3 }}>
+              Karakterler
                   </Text>
 
           </Block>
@@ -237,15 +182,15 @@ class CharacterDetail extends React.Component {
           <Block style={{ paddingBottom: -HeaderHeight * 2, paddingHorizontal: 15 }}>
             <Block>
               {
-                loading ? null : this.state.data.map((item, i) => (
+                loadingcharacters ? null : characters.map((item, i) => (
                   <CharacterDetailComics key={item.id}
                     item={{
                       id: item.id,
-                      title: item.title,
+                      title: item.name,
                       image: { uri: item.thumbnail.path + "/landscape_incredible." + item.thumbnail.extension },
-                      cta: 'Çizgi Roman Detayları',
+                      cta: 'Karakter Detayları',
                       ...item
-                    }} full ctaRight detailPage='ComicDetail'
+                    }} full ctaRight detailPage='CharacterDetail'
 
                   />
                 ))
@@ -309,4 +254,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(CharacterDetail);
+export default withNavigation(ComicDetail);

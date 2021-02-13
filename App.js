@@ -7,25 +7,12 @@ import { Block, GalioProvider } from 'galio-framework';
 import { NavigationContainer } from '@react-navigation/native';
 
 import Screens from './navigation/Screens';
-import { Images, articles, nowTheme } from './constants';
+import { Images, nowTheme } from './constants';
 
 // cache app images
 const assetImages = [
-  Images.Onboarding,
-  Images.Logo,
-  Images.Pro,
-  Images.NowLogo,
-  Images.iOSLogo,
-  Images.androidLogo,
-  Images.ProfilePicture,
-  Images.CreativeTimLogo,
-  Images.InvisionLogo,
-  Images.RegisterBackground,
   Images.ProfileBackground
 ];
-
-// cache product images
-articles.map(article => assetImages.push(article.image));
 
 function cacheImages(images) {
   return images.map(image => {

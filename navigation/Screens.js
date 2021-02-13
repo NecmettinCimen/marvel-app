@@ -1,248 +1,88 @@
 import React from 'react';
-import { Button, Block, NavBar, Text, theme, Button as GaButton } from 'galio-framework';
-import { Easing, Animated, Dimensions, StyleSheet } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createDrawerNavigator } from "@react-navigation/drawer";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // screens
-import Home from '../screens/Home';
 import Characters from '../screens/Characters';
 import CharacterDetail from '../screens/CharacterDetail';
-import Pro from '../screens/Pro';
-import Profile from '../screens/Profile';
-import Register from '../screens/Register';
-import Components from '../screens/Components';
-import Articles from '../screens/Articles';
-import Onboarding from '../screens/Onboarding';
-import SettingsScreen from '../screens/Settings';
-// drawer
-import CustomDrawerContent from "./Menu";
-// header for screens
-import { Header, Icon } from '../components';
-import { nowTheme, tabs } from "../constants";
 
-const { width } = Dimensions.get("screen");
+import Comics from '../screens/Comics';
+import ComicDetail from '../screens/ComicDetail';
+import { Dimensions } from 'react-native';
+import { nowTheme } from '../constants';
+import { Icon } from '../components';
+
 
 const BottomTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
-function ComponentsStack(props) {
-  return (
-    <Stack.Navigator initialRouteName="Components" mode="card" headerMode="screen">
-      <Stack.Screen name="Components" component={Components} options={{
-        header: ({ navigation, scene }) => (<Header title="Components" navigation={navigation} scene={scene} />),
-        backgroundColor: "#FFFFFF"
-      }} />
-    </Stack.Navigator>
-  );
-}
-
-function ArticlesStack(props) {
-  return (
-    <Stack.Navigator initialRouteName="Articles" mode="card" headerMode="screen">
-      <Stack.Screen name="Articles" component={Articles} options={{
-        header: ({ navigation, scene }) => (<Header title="Articles" navigation={navigation} scene={scene} />),
-        backgroundColor: '#FFFFFF'
-      }} />
-    </Stack.Navigator>
-  );
-}
-
-function AccountStack(props) {
-  return (
-    <Stack.Navigator initialRouteName="Account" mode="card" headerMode="screen">
-      <Stack.Screen
-        name="Account"
-        component={Register}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              transparent
-              title="Create Account"
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function ProfileStack(props) {
-  return (
-    <Stack.Navigator initialRouteName="Profile" mode="card" headerMode="screen">
-      <Stack.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              transparent
-              white
-              title="Profile"
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          cardStyle: { backgroundColor: "#FFFFFF" },
-          headerTransparent: true
-        }}
-      />
-      <Stack.Screen
-        name="Pro"
-        component={Pro}
-        options={{
-          header: ({ navigation, scene }) => (
-            <Header
-              title=""
-              back
-              white
-              transparent
-              navigation={navigation}
-              scene={scene}
-            />
-          ),
-          headerTransparent: true
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-const styles = StyleSheet.create({
-  tab: {
-    backgroundColor: theme.COLORS.TRANSPARENT,
-    borderRadius: 0,
-    borderWidth: 0,
-    height: 24,
-    elevation: 0
-  },
-})
+const cardStyle = { backgroundColor: "#FFFFFF" }
 function HomeStack(props) {
   return (
-    <BottomTab.Navigator mode="card" headerMode="screen">
+    <BottomTab.Navigator
+      tabBarOptions={{
+        activeTintColor: nowTheme.COLORS.ACTIVE,
+      }}
+      mode="card" headerMode="screen">
       <BottomTab.Screen
         name="Characters"
         component={Characters}
         options={{
-          tabBarButton:(props) => (
-            <Button
-              shadowless
-              style={[styles.tab, styles.divider]}
-              onPress={() => console.log(navigation.navigate('Pro'))}
-            >
-              <Block row middle>
-                <Icon
-                  name="bulb"
-                  family="NowExtra"
-                  size={18}
-                  style={{ paddingRight: 8 }}
-                  color={nowTheme.COLORS.HEADER}
-                />
-                <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={styles.tabTitle}>
-                  Karakterler
-                </Text>
-              </Block>
-            </Button>
+          title: 'Karakterler',
+          cardStyle,
+          tabBarIcon: ({ color, size }) => (
+            <Icon
+              name='planet2x'
+              family='NowExtra'
+              size={size}
+              color={color}
+            />
           ),
-          cardStyle: { backgroundColor: "#FFFFFF" }
         }}
       />
       <BottomTab.Screen
-        name="Pro"
-        component={Pro}
+        name="Comics"
+        component={Comics}
         options={{
-          tabBarButton:(props) => (
-            <Button
-              shadowless
-              style={[styles.tab, styles.divider]}
-              onPress={() => console.log(navigation.navigate('Pro'))}
-            >
-              <Block row middle>
-                <Icon
-                  name="bulb"
-                  family="NowExtra"
-                  size={18}
-                  style={{ paddingRight: 8 }}
-                  color={nowTheme.COLORS.HEADER}
-                />
-                <Text style={{ fontFamily: 'montserrat-regular' }} size={16} style={styles.tabTitle}>
-                  Çizgi Romanlar
-                </Text>
-              </Block>
-            </Button>
-          ),
-          headerTransparent: true
+          title: 'Çizgi Romanlar',
+          cardStyle,
+          tabBarIcon: ({ color, size }) => (
+            <Icon
+              name='paper'
+              family='NowExtra'
+              size={size}
+              color={color}
+            />)
         }}
       />
     </BottomTab.Navigator>
   );
 }
-function DetailStack(props) {
+export default function AppStack(props) {
   return (
-    <Stack.Navigator initialRouteName="CharacterDetail" mode="card" headerMode="screen">
-      <Stack.Screen
-        name="CharacterDetail"
-        component={CharacterDetail}
-        initialParams={props.route.params || {}}
-        options={{
-          header:()=>null,
-          cardStyle: { backgroundColor: "#FFFFFF" },
-          headerTransparent: true
-        }}
-      />
-    </Stack.Navigator>
-  );
-}
-
-function AppStack(props) {
-  return (
-    <Drawer.Navigator
-      style={{ flex: 1 }}
-      drawerContent={props => <CustomDrawerContent {...props} />}
-      drawerStyle={{
-        backgroundColor: nowTheme.COLORS.PRIMARY,
-        width: width * 0.8
-      }}
-      drawerContentOptions={{
-        activeTintcolor: nowTheme.COLORS.WHITE,
-        inactiveTintColor: nowTheme.COLORS.WHITE,
-        activeBackgroundColor: "transparent",
-        itemStyle: {
-          width: width * 0.75,
-          backgroundColor: "transparent",
-          paddingVertical: 16,
-          paddingHorizonal: 12,
-          justifyContent: "center",
-          alignContent: "center",
-          alignItems: "center",
-          overflow: "hidden"
-        },
-        labelStyle: {
-          fontSize: 18,
-          marginLeft: 12,
-          fontWeight: "normal"
-        }
-      }}
+    <Stack.Navigator
       initialRouteName="Home"
     >
-      <Drawer.Screen name="Home" component={HomeStack} />
-      <Drawer.Screen name="CharacterDetail" component={DetailStack} />
-      <Drawer.Screen name="Components" component={ComponentsStack} />
-      <Drawer.Screen name="Articles" component={ArticlesStack} />
-      <Drawer.Screen name="Profile" component={ProfileStack} />
-      <Drawer.Screen name="Account" component={AccountStack} />
-    </Drawer.Navigator>
-  );
-}
-
-export default function OnboardingStack(props) {
-  return (
-    <Stack.Navigator mode="card" headerMode="none">
-      <Stack.Screen name="App" component={AppStack} />
+      <Stack.Screen
+        options={{
+          header: () => null,
+          cardStyle,
+          headerTransparent: true
+        }}
+        name="Home" component={HomeStack} />
+      <Stack.Screen
+        options={{
+          title: '',
+          headerTransparent: true
+        }}
+        name="CharacterDetail" component={CharacterDetail} />
+      <Stack.Screen
+        options={{
+          title: '',
+          headerTransparent: true
+        }}
+        name="ComicDetail" component={ComicDetail} />
     </Stack.Navigator>
   );
 }
+
 
