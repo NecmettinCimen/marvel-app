@@ -10,7 +10,7 @@ import { comicsdetailcharacter } from '../services/comics';
 
 const { width, height } = Dimensions.get('screen');
 
-const thumbMeasure = (width - 48 - 32) / 3;
+const thumbMeasure = (width - 48 - 32) / 1;
 
 class ComicDetail extends React.Component {
   constructor(props) {
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: thumbMeasure,
     height: thumbMeasure,
-    borderRadius: 50,
+    borderRadius: 10,
     borderWidth: 0
   },
   nameInfo: {
