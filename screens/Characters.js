@@ -6,7 +6,7 @@ import {
 } from "react-native";
 import { Block, theme, Text } from "galio-framework";
 
-import { Card, Button } from "../components";
+import { CharacterItem } from "../components";
 import { Header } from "../components";
 import { characters } from "../services/characters";
 const { width } = Dimensions.get("screen");
@@ -16,28 +16,27 @@ class Characters extends React.Component {
     super();
     this.state = {
       list: [],
-      page: 1,
-      loading: false
+      page: 0,
+      loading: false,
+      search: ''
     }
   }
 
   componentDidMount() {
     this.getItems();
   }
-  getItems = async (name) => {
-    const { list, page } = this.state;
+  getItems = async () => {
+    const { list, page, search } = this.state;
     this.setState({ loading: true })
 
     // We are getting a few response data that's why get the response also so fast. This causes to state of the loading immeditately become false
     // That's why we can't see our loading indicator. To solve this problem we can use setTimeout to hold the setState not to trigger in order to see indicator for 2 seconds :)
-    var data = await characters(page,name)
+    var data = await characters(page, search)
 
-    setTimeout(() => {
       this.setState({
-        list: page === 1 ? data.results : [...list, ...data.results],
+        list: page === 0 ? data.results : [...list, ...data.results],
         loading: false
       })
-    }, 2000)
   }
 
   getMoreItems = () => {
@@ -48,14 +47,15 @@ class Characters extends React.Component {
 
   renderItems = ({ item }) => {
 
-    var image = { uri: item.thumbnail.path + "/standard_amazing." + item.thumbnail.extension }
+    var image = { uri: item.thumbnail.path + "/landscape_incredible." + item.thumbnail.extension }
     return (
-      <Card item={{
+      <CharacterItem item={{
+        id:item.id,
         title: item.name,
         image,
-        cta: 'View article',
-        horizontal: true
-      }} horizontal />
+        cta: 'Karakter Detayları',
+        ...item
+      }} full ctaRight detailPage='CharacterDetail' />
     );
   };
   footerIndicator = () => {
@@ -72,8 +72,9 @@ class Characters extends React.Component {
   searchOnChange = (text) => {
     if (text.length > 2)
       this.setState({
-        page: 1
-      }, () => this.getItems(text));
+        page: 0,
+        search: text
+      }, () => this.getItems());
   }
 
   render() {

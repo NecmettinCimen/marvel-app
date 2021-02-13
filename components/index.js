@@ -6,5 +6,6 @@ import Header from './Header';
 import Input from './Input';
 import Switch from './Switch';
 import Select from './Select';
+import CharacterItem from './CharacterItem';
 
-export { Button, Card, DrawerItem, Icon, Input, Header, Switch, Select };
+export { Button, Card, DrawerItem, Icon, Input, Header, Switch, Select, CharacterItem };

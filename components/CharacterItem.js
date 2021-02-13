@@ -6,10 +6,10 @@ import { Block, Text, theme } from 'galio-framework';
 
 import { nowTheme } from '../constants';
 
-class Card extends React.Component {
+class CharacterItem extends React.Component {
   goDetailPage = () => {
     const { navigation, detailPage, item } = this.props
-    navigation.navigate(detailPage,item)
+    navigation.navigate(detailPage, item)
   }
   render() {
     const {
@@ -35,12 +35,13 @@ class Card extends React.Component {
 
     return (
       <Block row={horizontal} card flex style={cardContainer}>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro')}>
+        <TouchableWithoutFeedback
+          onPress={this.goDetailPage}>
           <Block flex style={imgContainer}>
             <Image resizeMode="cover" source={item.image} style={imageStyles} />
           </Block>
         </TouchableWithoutFeedback>
-        <TouchableWithoutFeedback onPress={() => navigation.navigate('Pro')}>
+        <TouchableWithoutFeedback onPress={this.goDetailPage}>
           <Block flex space="between" style={styles.cardDescription}>
             <Block flex>
               <Text
@@ -91,6 +92,15 @@ class Card extends React.Component {
                   <Block />
                 )}
             </Block>
+            <Block center>
+              <Text
+                size={14}
+                muted={!ctaColor}
+              >
+                Çizgi Roman : {item.comics.available} | Dizi : {item.series.available} | Hikaye : {item.stories.available}
+              </Text>
+              
+            </Block>
             <Block right={ctaRight ? true : false}>
               <Text
                 style={styles.articleButton}
@@ -102,7 +112,9 @@ class Card extends React.Component {
               >
                 {item.cta}
               </Text>
+              
             </Block>
+            
           </Block>
         </TouchableWithoutFeedback>
       </Block>
@@ -110,7 +122,7 @@ class Card extends React.Component {
   }
 }
 
-Card.propTypes = {
+CharacterItem.propTypes = {
   item: PropTypes.object,
   horizontal: PropTypes.bool,
   full: PropTypes.bool,
@@ -174,4 +186,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default withNavigation(Card);
+export default withNavigation(CharacterItem);

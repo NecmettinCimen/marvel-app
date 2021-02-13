@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 // screens
 import Home from '../screens/Home';
 import Characters from '../screens/Characters';
+import CharacterDetail from '../screens/CharacterDetail';
 import Pro from '../screens/Pro';
 import Profile from '../screens/Profile';
 import Register from '../screens/Register';
@@ -179,6 +180,22 @@ function HomeStack(props) {
     </BottomTab.Navigator>
   );
 }
+function DetailStack(props) {
+  return (
+    <Stack.Navigator initialRouteName="CharacterDetail" mode="card" headerMode="screen">
+      <Stack.Screen
+        name="CharacterDetail"
+        component={CharacterDetail}
+        initialParams={props.route.params || {}}
+        options={{
+          header:()=>null,
+          cardStyle: { backgroundColor: "#FFFFFF" },
+          headerTransparent: true
+        }}
+      />
+    </Stack.Navigator>
+  );
+}
 
 function AppStack(props) {
   return (
@@ -212,6 +229,7 @@ function AppStack(props) {
       initialRouteName="Home"
     >
       <Drawer.Screen name="Home" component={HomeStack} />
+      <Drawer.Screen name="CharacterDetail" component={DetailStack} />
       <Drawer.Screen name="Components" component={ComponentsStack} />
       <Drawer.Screen name="Articles" component={ArticlesStack} />
       <Drawer.Screen name="Profile" component={ProfileStack} />
