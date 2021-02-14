@@ -18,13 +18,14 @@
     <a href="https://github.com/necmettincimen/marvelappreactnative"><strong>Explore the docs »</strong></a>
     <br />
     <br />
-    <a href="https://github.com/necmettincimen/marvelappreactnative">View Demo</a>
+    <a href="https://snack.expo.io/@necmettincimen/github.com-necmettincimen-marvelappreactnative">View Demo</a>
     ·
     <a href="https://github.com/necmettincimen/marvelappreactnative/issues">Report Bug</a>
     ·
     <a href="https://github.com/necmettincimen/marvelappreactnative/issues">Request Feature</a>
   </p>
 </p>
+
 
 
 
@@ -63,7 +64,7 @@ Marvel App React Native
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
-## Demo
+## Demo https://snack.expo.io/@necmettincimen/github.com-necmettincimen-marvelappreactnative (IOS and ANDROID tabs)
 
 | IOS | Android | 
 | --- | --- | 

@@ -1,4 +1,4 @@
-const baseUrl = 'http://marvelapi.necmettin.me/v1/public'
+const baseUrl = 'https://marvelapi.necmettin.me/v1/public'
 export const get = async (url) => {
     try {
         var fullUrl = `${baseUrl}${url}`
