@@ -20,8 +20,10 @@ class ListScreen extends React.Component {
       list: [],
       page: 0,
       loading: false,
-      search: ''
+      search: '',
+      setShadow:false
     }
+    this.handleScroll = this.handleScroll.bind(this)
   }
 
   componentDidMount() {
@@ -71,12 +73,22 @@ class ListScreen extends React.Component {
       }, () => this.getItems());
   }
 
+  
+  handleScroll(event) {
+    if(event.nativeEvent.contentOffset.y>100)
+       this.setState({setShadow:true}) 
+      else
+      this.setState({setShadow:false}) 
+
+   }
+
   render() {
     const { title, searchPlaceholder } = this.props
 
     return (
       <Block flex>
         <Header
+          setShadow={this.state.setShadow}
           title={title}
           search
           searchPlaceholder={searchPlaceholder}
@@ -85,6 +97,7 @@ class ListScreen extends React.Component {
 
         <Block flex center style={styles.home}>
           <FlatList
+           onScroll={this.handleScroll}
             showsVerticalScrollIndicator={false}
             contentContainerStyle={styles.articles}
             data={this.state.list}

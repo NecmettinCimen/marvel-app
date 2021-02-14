@@ -11,7 +11,8 @@ import { Images, nowTheme } from './constants';
 
 // cache app images
 const assetImages = [
-  Images.ProfileBackground
+  Images.CharacterBackground,
+  Images.ComicBackground
 ];
 
 function cacheImages(images) {

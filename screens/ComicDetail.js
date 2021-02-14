@@ -47,29 +47,40 @@ class ComicDetail extends React.Component {
       title,
     } = params
 
+    const {
+      titlelbl,
+      descriptionlbl,
+      buttonwrapper,
+      marvelbtn,
+      txtsize16,
+      abouttext,
+      desctext,
+      creatorlbl,
+      mgrt3,
+      creatorpnl,
+      cratorcard,
+      charecterlbl,
+      imgblk1
+    } = styles
+
     return (
       <ScrollView
         ref={(node) => this.scroll = node}
       >
         <ImageBackground
-          source={Images.ProfileBackground}
+          source={Images.ComicBackground}
           style={styles.profileContainer}
-          imageStyle={styles.profileBackground}
+          imageStyle={styles.CharacterBackground}
         >
           <Block flex style={styles.profileCard}>
-            <Block flex style={{ width: width, zIndex: 5, paddingHorizontal: 20 }}>
+            <Block flex style={imgblk1}>
               <Block middle style={{ top: height * 0.15 }}>
                 <Image source={image} style={styles.avatar} />
               </Block>
               <Block style={{ top: height * 0.2 }}>
                 <Block middle >
                   <Text
-                    style={{
-                      fontFamily: 'montserrat-bold',
-                      marginBottom: theme.SIZES.BASE / 2,
-                      fontWeight: '900',
-                      fontSize: 26
-                    }}
+                    style={titlelbl}
                     color='#ffffff'
                   >
                     {title}
@@ -78,14 +89,7 @@ class ComicDetail extends React.Component {
                   <Text
                     size={16}
                     color="white"
-                    style={{
-                      marginTop: 5,
-                      fontFamily: 'montserrat-bold',
-                      lineHeight: 20,
-                      fontWeight: 'bold',
-                      fontSize: 18,
-                      opacity: .8
-                    }}
+                    style={descriptionlbl}
                   >
                     {params.pageCount} Sayfa
                   </Text>
@@ -97,13 +101,13 @@ class ComicDetail extends React.Component {
               flex
               middle
               row
-              style={{ width: width, zIndex: 99 }}
+              style={buttonwrapper}
             >
               <Button
                 onPress={() => Linking.openURL(
                   params.urls.find(f => f.type == 'detail').url
                 )}
-                style={{ width: 114, height: 44, marginHorizontal: 5, elevation: 0 }} textStyle={{ fontSize: 16 }} round>
+                style={marvelbtn} textStyle={txtsize16} round>
                 Marvel Profili
               </Button>
               <GaButton
@@ -126,44 +130,29 @@ class ComicDetail extends React.Component {
         {loadingcharacters ? <Block flex ><ActivityIndicator size="large" color={nowTheme.COLORS.ACTIVE} /></Block> : <Block flex style={{ marginTop: 20 }}>
           <Block middle>
             <Text
-              style={{
-                color: '#2c2c2c',
-                fontWeight: 'bold',
-                fontSize: 19,
-                fontFamily: 'montserrat-bold',
-                marginTop: 15,
-                marginBottom: 30,
-                zIndex: 2
-              }}
+              style={abouttext}
             >
               Hakkında
                   </Text>
             <Text
               size={16}
               muted
-              style={{
-                textAlign: 'center',
-                fontFamily: 'montserrat-regular',
-                zIndex: 2,
-                lineHeight: 25,
-                color: '#9A9A9A',
-                paddingHorizontal: 15
-              }}
+              style={desctext}
             >
               {params.description}
             </Text>
           </Block>
-          <Block row style={{ paddingVertical: 14, paddingHorizontal: 15 }} space="between">
-            <Text bold size={16} color="#2c2c2c" style={{ marginTop: 3 }}>
+          <Block row style={creatorlbl} space="between">
+            <Text bold size={16} color="#2c2c2c" style={mgrt3}>
               Yazarlar
                   </Text>
 
           </Block>
-          <Block style={{ paddingBottom: -HeaderHeight * 2, paddingHorizontal: 15 }}>
+          <Block style={creatorpnl}>
             <Block>
               {
                 params.creators.items.map((item, i) => (
-                  <View key={i} style={{ padding: 5, backgroundColor: 'white', borderRadius: 5 }}>
+                  <View key={i} style={cratorcard}>
                     <Text>{item.name + " / " + item.role}</Text>
                   </View>
                 ))
@@ -171,7 +160,7 @@ class ComicDetail extends React.Component {
             </Block>
           </Block>
 
-          <Block row style={{ paddingVertical: 14, paddingHorizontal: 15 }} space="between">
+          <Block row style={charecterlbl} space="between">
             <Text bold size={16} color="#2c2c2c" style={{ marginTop: 3 }}>
               Karakterler
                   </Text>
@@ -179,7 +168,7 @@ class ComicDetail extends React.Component {
           </Block>
 
 
-          <Block style={{ paddingBottom: -HeaderHeight * 2, paddingHorizontal: 15 }}>
+          <Block style={creatorpnl}>
             <Block>
               {
                 loadingcharacters ? null : characters.map((item, i) => (
@@ -187,7 +176,7 @@ class ComicDetail extends React.Component {
                     item={{
                       id: item.id,
                       title: item.name,
-                      image: { uri: item.thumbnail.path + "/landscape_incredible." + item.thumbnail.extension },
+                      image: { uri: item.thumbnail.path + "/standard_amazing." + item.thumbnail.extension },
                       cta: 'Karakter Detayları',
                       ...item
                     }} full ctaRight detailPage='CharacterDetail'
@@ -216,7 +205,7 @@ const styles = StyleSheet.create({
     padding: 0,
     zIndex: 1
   },
-  profileBackground: {
+  CharacterBackground: {
     width,
   },
 
@@ -229,8 +218,8 @@ const styles = StyleSheet.create({
     marginTop: -80
   },
   avatar: {
-    width: thumbMeasure,
-    height: thumbMeasure,
+    width: thumbMeasure/1.3,
+    height: thumbMeasure/1.3,
     borderRadius: 10,
     borderWidth: 0
   },
@@ -251,7 +240,47 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     zIndex: 99,
     marginHorizontal: 5
-  }
+  },
+  titlelbl:{
+    fontFamily: 'montserrat-bold',
+    marginBottom: theme.SIZES.BASE / 2,
+    fontWeight: '900',
+    fontSize: 26
+  },
+  descriptionlbl:{
+    marginTop: 5,
+    fontFamily: 'montserrat-bold',
+    lineHeight: 20,
+    fontWeight: 'bold',
+    fontSize: 18,
+    opacity: .8
+  },
+  buttonwrapper:{ width: width, zIndex: 99 },
+  marvelbtn:{ width: 114, height: 44, marginHorizontal: 5, elevation: 0 },
+  txtsize16:{ fontSize: 16 },
+  abouttext:{
+    color: '#2c2c2c',
+    fontWeight: 'bold',
+    fontSize: 19,
+    fontFamily: 'montserrat-bold',
+    marginTop: 15,
+    marginBottom: 30,
+    zIndex: 2
+  },
+  desctext:{
+    textAlign: 'center',
+    fontFamily: 'montserrat-regular',
+    zIndex: 2,
+    lineHeight: 25,
+    color: '#9A9A9A',
+    paddingHorizontal: 15
+  },
+  creatorlbl:{ paddingVertical: 14, paddingHorizontal: 15 },
+  mgrt3:{ marginTop: 3 },
+  creatorpnl:{ paddingBottom: -HeaderHeight * 2, paddingHorizontal: 15 },
+  cratorcard:{ padding: 5, backgroundColor: 'white', borderRadius: 5 },
+  charecterlbl:{ paddingVertical: 14, paddingHorizontal: 15 },
+  imgblk1:{ width: width, zIndex: 5, paddingHorizontal: 20 }
 });
 
 export default withNavigation(ComicDetail);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { withNavigation } from '@react-navigation/compat';
-import { TouchableOpacity, StyleSheet, Platform, Dimensions, Keyboard } from 'react-native';
-import { Button, Block, NavBar, Text, theme, Button as GaButton } from 'galio-framework';
+import { StyleSheet, Platform, Dimensions } from 'react-native';
+import {  Block, NavBar, theme } from 'galio-framework';
 
 import Icon from './Icon';
 import Input from './Input';
@@ -10,34 +10,6 @@ import nowTheme from '../constants/Theme';
 const { height, width } = Dimensions.get('window');
 const iPhoneX = () =>
   Platform.OS === 'ios' && (height === 812 || width === 812 || height === 896 || width === 896);
-
-const BellButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity
-    style={[styles.button, style]}
-    onPress={() => navigation.navigate('Pro')}
-  >
-    <Icon
-      family="NowExtra"
-      size={16}
-      name="bulb"
-      color={nowTheme.COLORS[isWhite ? 'WHITE' : 'ICON']}
-    />
-    <Block middle style={[styles.notify, { backgroundColor: nowTheme.COLORS[isWhite ? 'WHITE' : 'PRIMARY'] }]} />
-  </TouchableOpacity>
-);
-
-const BasketButton = ({ isWhite, style, navigation }) => (
-  <TouchableOpacity style={[styles.button, style]} onPress={() => navigation.navigate('Pro')}>
-    <Icon
-      family="NowExtra"
-      size={16}
-      name="basket2x"
-      color={nowTheme.COLORS[isWhite ? 'WHITE' : 'ICON']}
-    />
-  </TouchableOpacity>
-);
-
-
 
 class Header extends React.Component {
   handleLeftPress = () => {
@@ -65,11 +37,7 @@ class Header extends React.Component {
   renderHeader = () => {
     const { search, options } = this.props;
     if (search || options) {
-      return (
-        <Block center>
-          {search ? this.renderSearch() : null}
-        </Block>
-      );
+      return <Block center>{search ? this.renderSearch() : null}</Block>;
     }
   };
   render() {
@@ -85,20 +53,10 @@ class Header extends React.Component {
       ...props
     } = this.props;
 
-    const headerStyles = [
-      transparent ? { backgroundColor: 'rgba(0,0,0,0)' } : null
-    ];
 
     return (
-      <Block style={headerStyles}>
-        <NavBar
-          title={title}
-          transparent={transparent}
-          titleStyle={[
-            styles.title
-          ]}
-          {...props}
-        />
+      <Block style={[{ backgroundColor: 'white' }, this.props.setShadow && styles.shadow]}>
+        <NavBar title={title} transparent={transparent} titleStyle={[styles.title]} {...props} />
         {this.renderHeader()}
       </Block>
     );
@@ -106,21 +64,28 @@ class Header extends React.Component {
 }
 
 const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: '#000',
+    shadowOffset: { width: 1, height: 1 },
+    shadowOpacity: 0.4,
+    shadowRadius: 3,
+    elevation: 10,
+  },
   button: {
     padding: 12,
-    position: 'relative'
+    position: 'relative',
   },
   title: {
-    color:nowTheme.COLORS.ACTIVE,
+    color: nowTheme.COLORS.ACTIVE,
     fontSize: 20,
     fontWeight: 'bold',
-    fontFamily: 'montserrat-regular'
+    fontFamily: 'montserrat-regular',
   },
   navbar: {
     paddingVertical: 0,
     // paddingBottom: theme.SIZES.BASE * 1.5,
     // paddingTop: iPhoneX ? theme.SIZES.BASE * 4 : theme.SIZES.BASE,
-    zIndex: 5
+    zIndex: 5,
   },
   shadow: {
     backgroundColor: theme.COLORS.WHITE,
@@ -128,7 +93,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowRadius: 6,
     shadowOpacity: 0.2,
-    elevation: 3
+    elevation: 3,
   },
   notify: {
     backgroundColor: nowTheme.COLORS.SUCCESS,
@@ -137,14 +102,14 @@ const styles = StyleSheet.create({
     width: theme.SIZES.BASE / 2,
     position: 'absolute',
     top: 9,
-    right: 12
+    right: 12,
   },
   header: {
-    backgroundColor: theme.COLORS.WHITE
+    backgroundColor: theme.COLORS.WHITE,
   },
   divider: {
     borderRightWidth: 0.3,
-    borderRightColor: theme.COLORS.ICON
+    borderRightColor: theme.COLORS.ICON,
   },
   search: {
     height: 48,
@@ -152,10 +117,10 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     borderWidth: 1,
     borderRadius: 30,
-    borderColor: nowTheme.COLORS.BORDER
+    borderColor: nowTheme.COLORS.BORDER,
   },
   options: {
-    elevation: 4
+    elevation: 4,
   },
   tab: {
     backgroundColor: theme.COLORS.TRANSPARENT,
@@ -163,18 +128,18 @@ const styles = StyleSheet.create({
     borderRadius: 0,
     borderWidth: 0,
     height: 24,
-    elevation: 0
+    elevation: 0,
   },
   tabTitle: {
     lineHeight: 19,
     fontWeight: '400',
-    color: nowTheme.COLORS.HEADER
+    color: nowTheme.COLORS.HEADER,
   },
   social: {
     width: theme.SIZES.BASE * 3.5,
     height: theme.SIZES.BASE * 3.5,
     borderRadius: theme.SIZES.BASE * 1.75,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
 });
 

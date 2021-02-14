@@ -9,6 +9,7 @@ import { nowTheme } from '../constants';
 class ListItem extends React.Component {
   goDetailPage = () => {
     const { navigation, detailPage, item } = this.props
+    item.image.uri =item.image.uri.replace('landscape_incredible','standard_amazing') 
     navigation.navigate(detailPage,item)
   }
   render() {
