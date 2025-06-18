@@ -1,4 +1,3 @@
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -13,7 +12,7 @@
   <h3 align="center">Marvel App React Native</h3>
 
   <p align="center">
-    Marvel App Cache Api
+    Marvel Comics mobile application - Cross-platform with React Native
     <br />
     <a href="https://github.com/necmettincimen/marvelappreactnative"><strong>Explore the docs »</strong></a>
     <br />
@@ -60,7 +59,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Marvel App React Native
+Marvel Comics mobile application - Cross-platform with React Native
 
 A list of commonly used resources that I find helpful are listed in the acknowledgements.
 
@@ -71,6 +70,8 @@ A list of commonly used resources that I find helpful are listed in the acknowle
 | [![IOS](ios.gif)](ios.gif) | [![ANDROID](android.gif)](android.gif) 
 
 ### Built With
+
+**Technologies:** `reactnative` `expo` `galioframework` `reactnavigation` `marvelapi`
 
 This section should list any major frameworks that you built your project using. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 * [React Native](https://reactnative.dev/)
